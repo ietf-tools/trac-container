@@ -1,0 +1,7 @@
+# trac-container
+
+A docker encapsulation of Trac, to run Trac under Python 2.7 when host
+mod_wsgi runs Python 3.x
+
+
+
