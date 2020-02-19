@@ -1,0 +1,13 @@
+#!/bin/bash
+
+name=trac-container
+image=ietf/$name
+tag=$(date +%Y-%m-%d)
+
+docker rm $(docker ps -a -f name=trac-container -q)
+#docker rmi --force $(docker images $image -q)
+#docker rmi $(docker images -f 'dangling=true' -q)
+docker build -t $image:$tag docker/
+docker tag $(docker images -q $image | head -n 1) $image:latest
+#docker push $image:$tag
+#docker push $image:latest

@@ -1,0 +1,26 @@
+#!/bin/bash
+
+running_container=$(docker ps -f name="trac-container" -q)
+if [ "$running_container" ]; then
+    echo "Trac-container is already running: $running_container"
+else
+    stopped_container=$(docker ps -f name="trac-container" -q -a -l)
+    if [ "$stopped_container" ]; then
+        echo "Starting trac-container: $stopped_container"
+        docker start $stopped_container
+    else
+        echo "Running a new trac-container from image ietf/trac-container:"
+	
+	GID=$(id -g wwwrun)
+        docker run -dt --restart always --hostname=trac.ietf.org  \
+                -v /etc/apache2/vhosts.d:/etc/apache2/perms.d     \
+                -v /a/svn/group:/a/svn/group                      \
+                -v /a/www/trac-setup:/a/www/trac-setup            \
+                -v /a/www/www6s/trac:/a/www/www6s/trac            \
+                -v /var/log:/var/log                              \
+		-e "WWWRUN_UID=$(id -u wwwrun)"			  \
+		-e "WWW_GID=$(id -g wwwrun)"			  \
+                --name trac-container -p 8004:80 ietf/trac-container:latest
+        #running_container=$(docker ps -f name="trac-container" -q)
+    fi
+fi

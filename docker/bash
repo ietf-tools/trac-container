@@ -1,0 +1,9 @@
+#!/bin/bash
+
+running_container=$(docker ps -f name="trac-container" -q)
+if [ "$running_container" ]; then
+    echo "Running bash in container: $running_container"
+    docker exec -ti $running_container /bin/bash
+else
+    echo "No running trac-container, you must start it first"
+fi

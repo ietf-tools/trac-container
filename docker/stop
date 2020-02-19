@@ -1,0 +1,14 @@
+#!/bin/bash
+
+running_container=$(docker ps -f name="trac-container" -q)
+if [ "$running_container" ]; then
+    echo "Stopping trac-container: $running_container"
+    docker stop $running_container
+else
+    stopped_container=$(docker ps -f name="trac-container" -q -a -l)
+    if [ "$stopped_container" ]; then
+        echo "Trac-container already stopped: $stopped_container"
+    else
+        echo "No trac-container found."
+    fi
+fi
