@@ -3,5 +3,6 @@
 A docker encapsulation of Trac, to run Trac under Python 2.7 when host
 mod_wsgi runs Python 3.x
 
-
+The docker image generated from the docker directory here is available
+at https://hub.docker.com/repository/docker/ietf/trac-container.
 
